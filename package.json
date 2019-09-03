@@ -1,0 +1,23 @@
+{
+  "name": "Hackernews_GraphQL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/f1nesse13/HackerNewsClone_GraphQL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/f1nesse13/HackerNewsClone_GraphQL/issues"
+  },
+  "homepage": "https://github.com/f1nesse13/HackerNewsClone_GraphQL#readme",
+  "dependencies": {
+    "graphql-yoga": "^1.18.3"
+  }
+}
