@@ -13,6 +13,7 @@ let links = [
   }
 ];
 
+let idCount = links.length;
 const resolvers = {
   Query: {
     info: () => `This is an API of a HackerNews clone.`,
@@ -20,10 +21,23 @@ const resolvers = {
   },
 
   // Trivial -- GraphQL knows to includes link information
-  Link: {
-    id: parent => parent.id,
-    description: parent => parent.description,
-    url: parent => parent.url
+  // Link:
+  // id: parent => parent.id
+  // description: parent => parent.description
+  // url: parent => parent.ur
+  //
+  //
+
+  Mutation: {
+    post: (parent, args) => {
+      const link = {
+        id: `link-${++idCount}`,
+        description: args.description,
+        url: args.url
+      };
+      links.push(link);
+      return link;
+    }
   }
 };
 
