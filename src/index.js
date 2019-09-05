@@ -5,20 +5,13 @@ let links = [
     id: 'link-1',
     description: 'test link',
     url: 'www.notaurl.com'
+  },
+  {
+    id: 'link-2',
+    description: 'test link 2',
+    url: 'www.notaurleither.com'
   }
 ];
-const typeDefs = ` 
-type Query {
-  info: String!,
-  feed: [Link!]!
-}
-
-type Link {
-  id: ID!,
-  description: String!,
-  url: String!
-}
-`;
 
 const resolvers = {
   Query: {
@@ -26,6 +19,7 @@ const resolvers = {
     feed: () => links
   },
 
+  // Trivial -- GraphQL knows to includes link information
   Link: {
     id: parent => parent.id,
     description: parent => parent.description,
@@ -34,7 +28,7 @@ const resolvers = {
 };
 
 const server = new GraphQLServer({
-  typeDefs,
+  typeDefs: './src/schema.graphql',
   resolvers
 });
 
