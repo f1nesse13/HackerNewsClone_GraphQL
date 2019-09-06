@@ -1,25 +1,13 @@
 const { GraphQLServer } = require('graphql-yoga');
 
-let links = [
-  {
-    id: 'link-1',
-    description: 'test link',
-    url: 'www.notaurl.com'
-  },
-  {
-    id: 'link-2',
-    description: 'test link 2',
-    url: 'www.notaurleither.com'
-  }
-];
-
 let idCount = links.length;
 const resolvers = {
   Query: {
     info: () => `This is an API of a HackerNews clone.`,
-    feed: () => links,
-    link: (parent, args) => {
-      const linkMatch = links.filter(l => l.id === args.id);
+    feed: (root, args, context, info) => context.prisma.links(),
+    link: (parent, args, context, info) => {
+      let linkMatch = context.prisma.links();
+      linkMatch = linkMatch.filter(l => l.id === args.id);
       return linkMatch[0];
     }
   },
@@ -33,14 +21,11 @@ const resolvers = {
   //
 
   Mutation: {
-    post: (parent, args) => {
-      const link = {
-        id: `link-${++idCount}`,
-        description: args.description,
-        url: args.url
-      };
-      links.push(link);
-      return link;
+    post: (parent, args, context) => {
+      return context.prisma.createLink({
+        url: args.url,
+        description: args.description
+      });
     }
   }
 };
