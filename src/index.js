@@ -17,7 +17,11 @@ let idCount = links.length;
 const resolvers = {
   Query: {
     info: () => `This is an API of a HackerNews clone.`,
-    feed: () => links
+    feed: () => links,
+    link: (parent, args) => {
+      const linkMatch = links.filter(l => l.id === args.id);
+      return linkMatch[0];
+    }
   },
 
   // Trivial -- GraphQL knows to includes link information
