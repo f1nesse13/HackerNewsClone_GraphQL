@@ -1,15 +1,10 @@
 const { GraphQLServer } = require('graphql-yoga');
+const { prisma } = require('./generated/prisma-client');
 
-let idCount = links.length;
 const resolvers = {
   Query: {
     info: () => `This is an API of a HackerNews clone.`,
-    feed: (root, args, context, info) => context.prisma.links(),
-    link: (parent, args, context, info) => {
-      let linkMatch = context.prisma.links();
-      linkMatch = linkMatch.filter(l => l.id === args.id);
-      return linkMatch[0];
-    }
+    feed: (root, args, context, info) => context.prisma.links()
   },
 
   // Trivial -- GraphQL knows to includes link information
@@ -32,7 +27,8 @@ const resolvers = {
 
 const server = new GraphQLServer({
   typeDefs: './src/schema.graphql',
-  resolvers
+  resolvers,
+  context: { prisma }
 });
 
 server.start(() => console.log(`server is running on localhost:4000`));
